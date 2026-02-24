@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prezentare Personală - Laborator 1</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+
+        <script>
+     alert("Hello world!");
+    </script>
+
+    <script src="js/contact_form.js"></script>
+
+        <header>
+        <h1>Comanelea Raul</h1>
+        <p>Student la Facultatea de Inginerie Electrica si Stiinta Calculatoarelor</p>
+    </header>
+
+    <hr>
+
+    <nav>
+        <h3>Navigare rapida:</h3>
+        <ul>
+            <li><a href="#about">Despre mine</a></li>
+            <li><a href="#education">Educație</a></li>
+            <li><a href="#hobbies">Hobby-uri</a></li>
+        </ul>
+    </nav>
+
+    <hr>
+
+    <main>
+        <section id="about">
+            <h2>Despre mine</h2>
+            <img src="images/profil.jpg" alt="Descriere poza de profil" loading="lazy">
+            <p>
+                Sunt un student caruia ii place sa invete lucruri noi
+            </p>
+        </section>
+        <hr>
+        <section id="education">
+            <h2>Educație</h2>
+            <ol>
+                <li>Liceul Economic</li>
+                <li>In prezent: Universitatea Transilvania - IESC , specializarea calculatoare </li>
+            </ol>
+        </section>
+    </main>
+
+    <hr>
+
+    <aside id="hobbies">
+        <h3>Alte interese</h3>
+        <p><strong>Citat favorit:</strong> "Nu am"</p>
+        <p><strong>Hobby-uri:</strong> Schi, ciclism</p>
+    </aside>
+
+    <hr>
+
+    <footer>
+ <h3>Contact:</h3>
+        
+        <form>
+            <div>
+                <label for="name">Nume:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div>
+                <label for="message">Mesaj:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+
+            <button type="button" onclick="submitForm()">Trimite mesaj</button>
+        </form>
+        <p>Copyright &copy; 2024 Comanelea Raul. Toate drepturile rezervate.</p>
+        <p>Contact: <a href="raulcomanelea55552@gmail.com">raulcomanelea55552@gmail.com</a></p>
+    </footer>
+    </body>
