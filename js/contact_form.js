@@ -67,3 +67,20 @@ titluri.forEach(function(titlu) {
         continut.classList.toggle('hidden');
     });
 });
+
+
+const backToTopBtn = document.getElementById("backToTopBtn");
+
+window.addEventListener('scroll', function() {
+
+    if (window.scrollY > 300) {
+        backToTopBtn.style.display = "block"; 
+    } else {
+        backToTopBtn.style.display = "none";  
+    }
+});
+
+
+backToTopBtn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});

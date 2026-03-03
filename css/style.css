@@ -93,3 +93,13 @@ main h2 {
     cursor: pointer;
     color: #0ea5e9; 
 }
+
+#backToTopBtn {
+    display: none;   
+    position: fixed;  
+    bottom: 20px;    
+    right: 20px;     
+    cursor: pointer;  
+    color: #ffffff;
+    background-color: #000000;
+}
