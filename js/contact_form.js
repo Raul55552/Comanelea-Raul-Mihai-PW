@@ -55,3 +55,15 @@ themeToggle.addEventListener('click', function(){
         themeToggle.textContent = 'Dark Mode';
     }
 });
+
+
+const titluri = document.querySelectorAll('main h2');
+
+titluri.forEach(function(titlu) {
+    
+    titlu.addEventListener('click', function() {
+        const continut = this.nextElementSibling;
+        
+        continut.classList.toggle('hidden');
+    });
+});
