@@ -14,15 +14,31 @@ if (elementSalut) {
     elementSalut.textContent = mesaj;
 }
 
-function submitForm() {
-    const nume = document.getElementById("name").value;
+    const form = document.querySelector('form');
+const feedbackElement = document.getElementById('form-feedback');
+
+form.addEventListener('submit', function(event){
+    
+    event.preventDefault();
+
+    console.log("Butonul a fost apasat! incep validarea...");
+
+    const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
-    const mesaj = document.getElementById("message").value;
+    const message = document.getElementById("message").value;
 
+    if(name.length < 2){
+        feedbackElement.textContent = "Numele trebuie sa aiba cel putin 2 caractere!";
+        feedbackElement.style.color = "red";
 
-    console.log("Nume:", nume);
-    console.log("Email:", email);
-    console.log("Mesaj:", mesaj);
-
-    console.warn("Goodbye World!");
-}
+    } else if(!email.includes('@')){
+        feedbackElement.textContent = "Te rugam sa introduci o adresa de email valida!";
+        feedbackElement.style.color = "red";
+    } else if(message.length < 10){
+        feedbackElement.textContent = "Mesajul trebuie sa aiba cel putin 10 caractere!";
+        feedbackElement.style.color = "red";
+    } else{
+        feedbackElement.textContent = "Multumim, " + name + "! Mesajul a fost trimis cu succes!";
+        feedbackElement.style.color = "green"; 
+    }
+});
