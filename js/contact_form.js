@@ -84,3 +84,68 @@ window.addEventListener('scroll', function() {
 backToTopBtn.addEventListener('click', function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+const elementeHtml = document.querySelectorAll('#education ol li');
+
+const listaEducatie = Array.from(elementeHtml).map(function(element){
+    return element.textContent;
+});
+
+console.log("1. Lista mea de educatie este:", listaEducatie);
+
+const filtruLiceu = listaEducatie.filter(function(text){
+    return text.includes("Liceul");
+});
+console.log("2a. Rezultat filtru 'Liceul'", filtruLiceu);
+
+const filtruAn = listaEducatie.filter(function(text){
+    return text.includes("2026");
+});
+console.log("2b. Rezultat filtru'2026'", filtruAn);
+
+const primeleCuvinte = listaEducatie.map(function(text){
+    return text.split(' ')[0];
+});
+console.log("3. Primele cuvinte sunt: ", primeleCuvinte);
+
+const totalAni = listaEducatie.reduce(function(total,text){
+    const anii = text.trim().slice(-9);
+    const bucati = anii.split('-');
+
+    const anInceput = Number(bucati[0]);
+    const anSfarsit = Number(bucati[1]);
+
+    const durata = anSfarsit - anInceput;
+
+    return total + durata;
+},0);
+console.log("4. Total ani de studiu: " + totalAni);
+
+
+//json
+async function incarcaProiecte() {
+    try {
+    
+        const raspuns = await fetch('data/projects.json');
+        const proiecte = await raspuns.json();
+
+        const listaHTML = proiecte.map(function(p) {
+            return `<li>${p.name} - ${p.tech}</li>`;
+        }).join(''); 
+
+        const finalizate = proiecte.filter(function(p) {
+            return p.done === true;
+        }).length;
+
+        const container = document.getElementById("projects");
+        container.innerHTML = `
+            <ul>${listaHTML}</ul>
+            <p>Finalizate: ${finalizate} din ${proiecte.length}</p>
+        `;
+
+    } catch (eroare) {
+        console.log("Eroare la încărcare:", eroare);
+    }
+}
+
+incarcaProiecte();

@@ -1,0 +1,6 @@
+[
+    { "name": "Site Personal", "tech": "HTML, CSS", "done": true },
+    { "name": "Joc X si 0", "tech": "JavaScript", "done": true },
+    { "name": "Aplicatie Vreme", "tech": "React", "done": false },
+    { "name": "Magazin Online", "tech": "Node.js", "done": false }
+]
