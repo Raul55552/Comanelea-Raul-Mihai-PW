@@ -9,18 +9,27 @@ function App() {
         { title: "Proiect 3", description: "Dashboard React" },
         
         { title: "Proiect 4", description: "Joc X și 0" },
-        { title: "Proiect 5", description: "Aplicatie de Vreme" }
+        { title: "Proiect 5", description: "Aplicatie de Vreme" },
+        {title: "Proiect 6", description: "Joc nu te supara frate"}
     ];
     const [count, setCount] = useState(0);
+    // const [text, setText] = useState('ori');
+
+    function updateDownCount() {
+        if (count == 0)
+            return;
+        setCount(count - 1);
+    }
+
     return (
         <div>
             <h1>Dashboard</h1>
 
             <p>Ai apasat de {count} ori</p>
             <button onClick={() => setCount(count + 1)}>+1</button>
-            <button onClick={() => setCount(count - 1)}>-1</button>
+            <button onClick={updateDownCount}>-1</button>
             <button onClick={() => setCount(0)}>Reset</button>
-            
+
            {projects.map(function(item, index) {
                 return <Card key={index} title={item.title} description={item.description} />;
             })}   
