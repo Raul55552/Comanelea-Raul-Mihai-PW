@@ -1,4 +1,5 @@
 
+ import { useState } from 'react';
 import Card from './Card'; 
 
 function App() {
@@ -10,9 +11,14 @@ function App() {
         { title: "Proiect 4", description: "Joc X și 0" },
         { title: "Proiect 5", description: "Aplicatie de Vreme" }
     ];
+    const [count, setCount] = useState(0);
     return (
         <div>
             <h1>Dashboard</h1>
+
+            <p>Ai apasat de {count} ori</p>
+            <button onClick={() => setCount(count + 1)}>Click</button>
+
            {projects.map(function(item, index) {
                 return <Card key={index} title={item.title} description={item.description} />;
             })}   
