@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 function TodoList() {
  const [todos, setTodos] = useState([]);
  const [input, setInput] = useState('');
@@ -7,7 +8,13 @@ function TodoList() {
  setTodos([...todos, input]); // Creeaza array NOU cu tot ce era + input
  setInput(''); // Goleste input-ul
  }
+ function handleDelete(index) {
+    setTodos(todos.filter(function(_, i) {
+        return i !== index;
+    }));
+}
  return (
+    
  <div>
  <h3>Todo List</h3>
  <input
@@ -18,9 +25,14 @@ function TodoList() {
  <button onClick={handleAdd}>Adauga</button>
 <ul>
       {todos.map(function(todo, index) {
-       return <li key={index}>{todo}</li>;
-          })}
- </ul>
+              return (
+            <li key={index}>
+              {todo}
+          <button onClick={() => handleDelete(index)}>Sterge</button>
+          </li>
+         );
+      })}
+      </ul>
  </div>
  );
 }
