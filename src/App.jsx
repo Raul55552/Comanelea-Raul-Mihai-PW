@@ -1,6 +1,7 @@
 
  import { useState } from 'react';
 import Card from './Card'; 
+import QuickNote from './QuickNote';
 
 function App() {
     const projects = [
@@ -13,7 +14,6 @@ function App() {
         {title: "Proiect 6", description: "Joc nu te supara frate"}
     ];
     const [count, setCount] = useState(0);
-    // const [text, setText] = useState('ori');
 
     function updateDownCount() {
         if (count == 0)
@@ -24,6 +24,8 @@ function App() {
     return (
         <div>
             <h1>Dashboard</h1>
+
+            <QuickNote />
 
             <p>Ai apasat de {count} ori</p>
             <button onClick={() => setCount(count + 1)}>+1</button>
