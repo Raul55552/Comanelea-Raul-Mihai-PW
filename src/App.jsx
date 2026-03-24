@@ -2,6 +2,7 @@
  import { useState } from 'react';
 import Card from './Card'; 
 import QuickNote from './QuickNote';
+import ToDoList from './ToDoList';
 
 function App() {
     const projects = [
@@ -26,6 +27,7 @@ function App() {
             <h1>Dashboard</h1>
 
             <QuickNote />
+            <ToDoList />
 
             <p>Ai apasat de {count} ori</p>
             <button onClick={() => setCount(count + 1)}>+1</button>
