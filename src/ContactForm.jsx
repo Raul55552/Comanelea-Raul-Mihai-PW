@@ -10,6 +10,8 @@ function ContactForm() {
 function handleSubmit() {
         if (name.trim() === '' || email.trim() === '' || message.trim() === '') {
             setFeedback('Completeaza toate campurile!');
+        }else if(!email.includes("@")){
+            setFeedback("Email invalid");
         } else {
             setFeedback('Multumim, ' + name + '!');
         }
@@ -28,6 +30,7 @@ function handleSubmit() {
              <div>
         <input 
                     placeholder="Adresa de email"
+                    type="email"
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)} 
                 />
