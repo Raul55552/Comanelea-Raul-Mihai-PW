@@ -48,9 +48,23 @@ function ProjectList() {
                         key={project.id} 
                         title={project.title} 
                         description={project.tech} 
+                        done={project.done}
                     />
             );
           })}
+          <div style={{ marginTop: '20px', padding: '10px', backgroundColor: '#eee' }}>
+             <h4>Statistici Proiecte:</h4>
+             <p>
+                   Total proiecte: <strong>{projects.length}</strong>
+             </p>
+            <p>
+                     Finalizate: <strong>{projects.filter(p => p.done).length}</strong>
+                </p>
+                <p>
+                    In lucru: <strong>{projects.filter(p => !p.done).length}</strong>
+                </p>
+            </div>
+
      </div>
     );
 }
