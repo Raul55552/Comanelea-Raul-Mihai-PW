@@ -58,10 +58,10 @@ function ProjectList() {
                    Total proiecte: <strong>{projects.length}</strong>
              </p>
             <p>
-                     Finalizate: <strong>{projects.filter(p => p.done).length}</strong>
+                    Proiecte finalizate: <strong>{projects.filter(p => p.done).length}</strong>
                 </p>
                 <p>
-                    In lucru: <strong>{projects.filter(p => !p.done).length}</strong>
+                    Proiecte in lucru: <strong>{projects.filter(p => !p.done).length}</strong>
                 </p>
             </div>
 
