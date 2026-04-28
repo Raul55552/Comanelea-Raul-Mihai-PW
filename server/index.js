@@ -62,6 +62,19 @@ app.post('/api/projects', function(req, res) {
     res.status(201).json(newProject);
 });
 
+app.delete('/api/projects/:id', function(req, res) {
+
+    const idToFind = parseInt(req.params.id);
+   
+    const index = projects.findIndex(p => p.id === idToFind);
+
+    if (index === -1) {
+        res.status(404).json({ error: 'Not found' });
+    } else {
+        projects.splice(index, 1); 
+        res.json({ message: 'Deleted' }); 
+    }
+});
 
 //PORNIREA SERVERULUI 
 app.listen(PORT, function() {
