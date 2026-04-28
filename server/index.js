@@ -11,16 +11,42 @@ const projects = [
 ];
 
 
+// Ruta de bază
 app.get('/', function(req, res) {
     res.json({ message: 'Serverul functioneaza!' });
 });
 
-// GET /api/projects - returneaza toate proiectele 
+//Returnează toate proiectele
 app.get('/api/projects', function(req, res) {
     res.json(projects);
 });
 
-// Porneste serverul (TREBUIE SĂ FIE MEREU LA FINAL)
+//Statistici 
+app.get('/api/stats', function(req, res) {
+    const totalProjects = projects.length;
+    const completedProjects = projects.filter(p => p.done === true).length;
+    const inProgressProjects = projects.filter(p => p.done === false).length;
+
+    res.json({
+        total: totalProjects,
+        completed: completedProjects,
+        inProgress: inProgressProjects
+    });
+});
+
+// Returnează un singur proiect după ID
+app.get('/api/projects/:id', function(req, res) {
+    const cautatId = parseInt(req.params.id);
+    const project = projects.find(p => p.id === cautatId);
+
+    if (project) {
+        res.json(project);
+    } else {
+        res.status(404).json({ error: 'Not found' });
+    }
+});
+
+//PORNIREA SERVERULUI 
 app.listen(PORT, function() {
     console.log('Server pornit pe http://localhost:' + PORT);
 });
