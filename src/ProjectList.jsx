@@ -8,12 +8,12 @@ function ProjectList() {
  const [search, setSearch] = useState('');
 
  useEffect(function() {
- fetch('/data/projects.json')
+ fetch('http://localhost:3000/api/projects')
  .then(function(response) {
  return response.json();
  })
  .then(function(data) {
- setProjects(data.projects);
+ setProjects(data);
  setLoading(false);
  })
  .catch(function() {
@@ -21,12 +21,15 @@ function ProjectList() {
     setLoading(false);
 });
  }, []);
+
  if (loading) {
  return <p>Se incarca...</p>;
  }
+
  if (error !== null) {
     return <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>;
 }
+
  return (
         <div style={{ border: '1px solid black', padding: '10px', margin: '10px 0' }}>
         <h3>Proiecte</h3>
@@ -45,7 +48,7 @@ function ProjectList() {
                 .map(function(project) {
                  return (
                     <Card 
-                        key={project.id} 
+                        key={project._id} 
                         title={project.title} 
                         description={project.tech} 
                         done={project.done}
