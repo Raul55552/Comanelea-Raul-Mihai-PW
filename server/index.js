@@ -13,7 +13,11 @@ mongoose.connect('mongodb://localhost:27017/dashboard')
         console.error('Eroare conectare MongoDB:', err);
     });
 
+const cors = require('cors');
+app.use(cors());
+
 app.use(express.json());
+
 
 app.get('/', function(req, res) {
     res.json({ message: 'Serverul functioneaza!' });
