@@ -2,6 +2,19 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/dashboard')
+    .then(function() {
+        console.log('Conectat la MongoDB!');
+    })
+    .catch(function(err) {
+        console.error('Eroare conectare MongoDB:', err);
+    });
+// =================================
+
+app.use(express.json());
+
 // Date (temporar in memorie, vom folosi MongoDB mai tarziu)
 const projects = [
     { id: 1, title: "Pagina Personala", tech: "HTML, CSS", done: true },
