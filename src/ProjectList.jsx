@@ -43,6 +43,17 @@ function ProjectList() {
      }
  }
 
+ async function handleDelete(id) {
+     try {
+         await fetch('http://localhost:3000/api/projects/' + id, {
+             method: 'DELETE'
+         });
+         setProjects(projects.filter((p) => p._id !== id));
+     } catch (err) {
+         console.error('Eroare la stergere:', err);
+     }
+ }
+
  if (loading) {
  return <p>Se incarca...</p>;
  }
@@ -85,12 +96,14 @@ function ProjectList() {
                 })
                 .map(function(project) {
                  return (
-                    <Card 
-                        key={project._id} 
-                        title={project.title} 
-                        description={project.tech} 
-                        done={project.done}
-                    />
+                    <div key={project._id} style={{ marginBottom: '15px' }}>
+                        <Card 
+                            title={project.title} 
+                            description={project.tech} 
+                            done={project.done}
+                        />
+                        <button onClick={() => handleDelete(project._id)}>Sterge</button>
+                    </div>
             );
           })}
           <div style={{ marginTop: '20px', padding: '10px', backgroundColor: '#eee' }}>
