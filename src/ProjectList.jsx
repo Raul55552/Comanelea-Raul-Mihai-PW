@@ -6,6 +6,9 @@ function ProjectList() {
  const [loading, setLoading] = useState(true);
  const [error, setError] = useState(null);
  const [search, setSearch] = useState('');
+ 
+ const [title, setTitle] = useState('');
+ const [tech, setTech] = useState('');
 
  useEffect(function() {
  fetch('http://localhost:3000/api/projects')
@@ -22,6 +25,24 @@ function ProjectList() {
 });
  }, []);
 
+ async function handleSubmit(e) {
+     e.preventDefault();
+     try {
+         const response = await fetch('http://localhost:3000/api/projects', {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ title: title, tech: tech })
+         });
+         const newProject = await response.json();
+         
+         setProjects([...projects, newProject]);
+         setTitle(''); 
+         setTech('');
+     } catch (err) {
+         console.error('Eroare:', err);
+     }
+ }
+
  if (loading) {
  return <p>Se incarca...</p>;
  }
@@ -34,6 +55,23 @@ function ProjectList() {
         <div style={{ border: '1px solid black', padding: '10px', margin: '10px 0' }}>
         <h3>Proiecte</h3>
          
+        <form onSubmit={handleSubmit}>
+            <input 
+                type="text" 
+                placeholder="Titlu..." 
+                value={title} 
+                onChange={(e) => setTitle(e.target.value)} 
+            />
+            <input 
+                type="text" 
+                placeholder="Tehnologii..." 
+                value={tech} 
+                onChange={(e) => setTech(e.target.value)} 
+            />
+            <button type="submit">Adauga</button>
+        </form>
+        <br />
+
         <input 
             type="text"
             placeholder="Cauta un proiect..."
