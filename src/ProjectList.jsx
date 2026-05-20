@@ -5,14 +5,16 @@ function ProjectList() {
  const [projects, setProjects] = useState([]);
  const [loading, setLoading] = useState(true);
  const [error, setError] = useState(null);
- const [search, setSearch] = useState('');
  
  const [title, setTitle] = useState('');
  const [tech, setTech] = useState('');
-
  const [editingId, setEditingId] = useState(null);
  const [editTitle, setEditTitle] = useState('');
  const [editTech, setEditTech] = useState('');
+
+ const [search, setSearch] = useState('');
+ const [filterStatus, setFilterStatus] = useState('toate');
+ const [sortBy, setSortBy] = useState('data');
 
  useEffect(function() {
      fetch('http://localhost:3000/api/projects')
@@ -94,14 +96,36 @@ function ProjectList() {
             </button>
         </form>
 
-        <input 
-            type="text" placeholder="Cauta un proiect..." 
-            value={search} onChange={(e) => setSearch(e.target.value)} 
-            style={{ padding: '8px', width: '100%', marginBottom: '20px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' }} 
-        />
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+            <input 
+                type="text" placeholder="Caută un proiect..." 
+                value={search} onChange={(e) => setSearch(e.target.value)} 
+                style={{ flex: 1, padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }} 
+            />
+            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}>
+                <option value="toate">Toate</option>
+                <option value="finalizate">Finalizate</option>
+                <option value="in-lucru">În lucru</option>
+            </select>
+            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}>
+                <option value="data">Sortare: Dată</option>
+                <option value="titlu">Sortare: Titlu</option>
+            </select>
+        </div>
         
         {projects
             .filter(p => p.title.toLowerCase().includes(search.toLowerCase()))
+            .filter(p => {
+                if (filterStatus === 'finalizate') return p.done === true;
+                if (filterStatus === 'in-lucru') return p.done === false;
+                return true; 
+            })
+            .sort((a, b) => {
+                if (sortBy === 'titlu') {
+                    return a.title.localeCompare(b.title); 
+                }
+                return b._id.localeCompare(a._id); 
+            })
             .map(function(project) {
                 if (editingId === project._id) {
                     return (
@@ -122,7 +146,7 @@ function ProjectList() {
                             <button onClick={() => handleToggle(project._id, project.done)} style={{ padding: '6px 12px', backgroundColor: project.done ? '#ffc107' : '#198754', color: project.done ? '#000' : '#fff', border: 'none', borderRadius: '4px', marginRight: '10px', cursor: 'pointer' }}>
                                 {project.done ? 'Marchează "În lucru"' : 'Marchează "Finalizat"'}
                             </button>
-                        
+                            
                             <button onClick={() => {
                                 setEditingId(project._id);
                                 setEditTitle(project.title);
@@ -131,7 +155,6 @@ function ProjectList() {
                                 Editează
                             </button>
 
-                            {/* BUTON STERGE - ROSU */}
                             <button onClick={() => handleDelete(project._id)} style={{ padding: '6px 12px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
                                 Sterge
                             </button>
