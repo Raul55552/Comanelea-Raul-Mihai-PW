@@ -37,10 +37,13 @@ function ProjectList() {
  }
 
  async function handleDelete(id) {
-     try {
-         await fetch('http://localhost:3000/api/projects/' + id, { method: 'DELETE' });
-         setProjects(projects.filter((p) => p._id !== id));
-     } catch (err) { console.error('Eroare la stergere:', err); }
+     // Fereastra de confirmare a browserului
+     if (window.confirm('Sigur doriti sa stergeti acest proiect?')) {
+         try {
+             await fetch('http://localhost:3000/api/projects/' + id, { method: 'DELETE' });
+             setProjects(projects.filter((p) => p._id !== id));
+         } catch (err) { console.error('Eroare la stergere:', err); }
+     }
  }
 
  async function handleToggle(id, currentDone) {
@@ -63,9 +66,7 @@ function ProjectList() {
              body: JSON.stringify({ title: editTitle, tech: editTech })
          });
          const updatedProject = await response.json();
-    
          setProjects(projects.map(p => p._id === id ? updatedProject : p));
-    
          setEditingId(null); 
      } catch (err) { console.error('Eroare la editare:', err); }
  }
@@ -89,7 +90,6 @@ function ProjectList() {
         {projects
             .filter(p => p.title.toLowerCase().includes(search.toLowerCase()))
             .map(function(project) {
-            
                 if (editingId === project._id) {
                     return (
                         <div key={project._id} style={{ marginBottom: '15px', padding: '10px', border: '1px dashed gray' }}>
