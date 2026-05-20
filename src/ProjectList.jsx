@@ -34,7 +34,6 @@ function ProjectList() {
              body: JSON.stringify({ title: title, tech: tech })
          });
          const newProject = await response.json();
-         
          setProjects([...projects, newProject]);
          setTitle(''); 
          setTech('');
@@ -51,6 +50,23 @@ function ProjectList() {
          setProjects(projects.filter((p) => p._id !== id));
      } catch (err) {
          console.error('Eroare la stergere:', err);
+     }
+ }
+
+
+ async function handleToggle(id, currentDone) {
+     try {
+         const response = await fetch('http://localhost:3000/api/projects/' + id, {
+             method: 'PUT',
+             headers: { 'Content-Type': 'application/json' },
+             
+             body: JSON.stringify({ done: !currentDone }) 
+         });
+         const updatedProject = await response.json();
+        
+         setProjects(projects.map(p => p._id === id ? updatedProject : p));
+     } catch (err) {
+         console.error('Eroare la actualizare:', err);
      }
  }
 
@@ -102,23 +118,21 @@ function ProjectList() {
                             description={project.tech} 
                             done={project.done}
                         />
+                       
+                        <button onClick={() => handleToggle(project._id, project.done)} style={{ marginRight: '10px' }}>
+                            {project.done ? 'Marchează "În lucru"' : 'Marchează "Finalizat"'}
+                        </button>
+                        
                         <button onClick={() => handleDelete(project._id)}>Sterge</button>
                     </div>
             );
           })}
           <div style={{ marginTop: '20px', padding: '10px', backgroundColor: '#eee' }}>
              <h4>Statistici Proiecte:</h4>
-             <p>
-                   Total proiecte: <strong>{projects.length}</strong>
-             </p>
-            <p>
-                    Proiecte finalizate: <strong>{projects.filter(p => p.done).length}</strong>
-                </p>
-                <p>
-                    Proiecte in lucru: <strong>{projects.filter(p => !p.done).length}</strong>
-                </p>
-            </div>
-
+             <p>Total proiecte: <strong>{projects.length}</strong></p>
+             <p>Proiecte finalizate: <strong>{projects.filter(p => p.done).length}</strong></p>
+             <p>Proiecte in lucru: <strong>{projects.filter(p => !p.done).length}</strong></p>
+          </div>
      </div>
     );
 }
