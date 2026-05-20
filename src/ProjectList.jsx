@@ -37,7 +37,6 @@ function ProjectList() {
  }
 
  async function handleDelete(id) {
-     // Fereastra de confirmare a browserului
      if (window.confirm('Sigur doriti sa stergeti acest proiect?')) {
          try {
              await fetch('http://localhost:3000/api/projects/' + id, { method: 'DELETE' });
@@ -75,58 +74,77 @@ function ProjectList() {
  if (error !== null) return <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>;
 
  return (
-        <div style={{ border: '1px solid black', padding: '10px', margin: '10px 0' }}>
-        <h3>Proiecte</h3>
+        <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto', fontFamily: 'Arial, sans-serif' }}>
+        <h2 style={{ borderBottom: '2px solid #333', paddingBottom: '10px' }}>Proiectele mele</h2>
          
-        <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Titlu..." value={title} onChange={(e) => setTitle(e.target.value)} />
-            <input type="text" placeholder="Tehnologii..." value={tech} onChange={(e) => setTech(e.target.value)} />
-            <button type="submit">Adauga</button>
+        <form onSubmit={handleSubmit} style={{ backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '8px', marginBottom: '20px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+            <h4 style={{ margin: '0 0 10px 0' }}>Adaugă un proiect nou</h4>
+            <input 
+                type="text" placeholder="Titlu..." required
+                value={title} onChange={(e) => setTitle(e.target.value)} 
+                style={{ padding: '8px', marginRight: '10px', borderRadius: '4px', border: '1px solid #ccc' }} 
+            />
+            <input 
+                type="text" placeholder="Tehnologii..." required
+                value={tech} onChange={(e) => setTech(e.target.value)} 
+                style={{ padding: '8px', marginRight: '10px', borderRadius: '4px', border: '1px solid #ccc' }} 
+            />
+            <button type="submit" style={{ padding: '8px 15px', backgroundColor: '#0d6efd', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+                Adauga Proiect
+            </button>
         </form>
-        <br />
 
-        <input type="text" placeholder="Cauta un proiect..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ marginBottom: '15px' }} />
+        <input 
+            type="text" placeholder="Cauta un proiect..." 
+            value={search} onChange={(e) => setSearch(e.target.value)} 
+            style={{ padding: '8px', width: '100%', marginBottom: '20px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' }} 
+        />
         
         {projects
             .filter(p => p.title.toLowerCase().includes(search.toLowerCase()))
             .map(function(project) {
                 if (editingId === project._id) {
                     return (
-                        <div key={project._id} style={{ marginBottom: '15px', padding: '10px', border: '1px dashed gray' }}>
-                            <input type="text" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
-                            <input type="text" value={editTech} onChange={(e) => setEditTech(e.target.value)} />
-                            <button onClick={() => handleSaveEdit(project._id)}>Salvează</button>
-                            <button onClick={() => setEditingId(null)}>Anulează</button>
+                        <div key={project._id} style={{ marginBottom: '20px', padding: '15px', border: '2px dashed #0d6efd', borderRadius: '8px' }}>
+                            <input type="text" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} style={{ padding: '5px', marginRight: '5px' }} />
+                            <input type="text" value={editTech} onChange={(e) => setEditTech(e.target.value)} style={{ padding: '5px', marginRight: '5px' }} />
+                            <button onClick={() => handleSaveEdit(project._id)} style={{ padding: '6px 12px', backgroundColor: '#198754', color: 'white', border: 'none', borderRadius: '4px', marginRight: '5px', cursor: 'pointer' }}>Salvează</button>
+                            <button onClick={() => setEditingId(null)} style={{ padding: '6px 12px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Anulează</button>
                         </div>
                     );
                 }
 
                 return (
-                    <div key={project._id} style={{ marginBottom: '15px' }}>
+                    <div key={project._id} style={{ marginBottom: '20px' }}>
                         <Card title={project.title} description={project.tech} done={project.done} />
                         
-                        <button onClick={() => handleToggle(project._id, project.done)} style={{ marginRight: '10px' }}>
-                            {project.done ? 'Marchează "În lucru"' : 'Marchează "Finalizat"'}
-                        </button>
+                        <div style={{ marginTop: '10px' }}>
+                            <button onClick={() => handleToggle(project._id, project.done)} style={{ padding: '6px 12px', backgroundColor: project.done ? '#ffc107' : '#198754', color: project.done ? '#000' : '#fff', border: 'none', borderRadius: '4px', marginRight: '10px', cursor: 'pointer' }}>
+                                {project.done ? 'Marchează "În lucru"' : 'Marchează "Finalizat"'}
+                            </button>
                         
-                        <button onClick={() => {
-                            setEditingId(project._id);
-                            setEditTitle(project.title);
-                            setEditTech(project.tech);
-                        }} style={{ marginRight: '10px' }}>
-                            Editează
-                        </button>
+                            <button onClick={() => {
+                                setEditingId(project._id);
+                                setEditTitle(project.title);
+                                setEditTech(project.tech);
+                            }} style={{ padding: '6px 12px', backgroundColor: '#0dcaf0', color: '#000', border: 'none', borderRadius: '4px', marginRight: '10px', cursor: 'pointer' }}>
+                                Editează
+                            </button>
 
-                        <button onClick={() => handleDelete(project._id)}>Sterge</button>
+                            {/* BUTON STERGE - ROSU */}
+                            <button onClick={() => handleDelete(project._id)} style={{ padding: '6px 12px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                                Sterge
+                            </button>
+                        </div>
                     </div>
                 );
         })}
         
-        <div style={{ marginTop: '20px', padding: '10px', backgroundColor: '#eee' }}>
-            <h4>Statistici Proiecte:</h4>
-            <p>Total proiecte: <strong>{projects.length}</strong></p>
-            <p>Proiecte finalizate: <strong>{projects.filter(p => p.done).length}</strong></p>
-            <p>Proiecte in lucru: <strong>{projects.filter(p => !p.done).length}</strong></p>
+        <div style={{ marginTop: '30px', padding: '15px', backgroundColor: '#e9ecef', borderRadius: '8px', borderLeft: '5px solid #6c757d' }}>
+            <h4 style={{ margin: '0 0 10px 0' }}>Statistici Proiecte:</h4>
+            <p style={{ margin: '5px 0' }}>Total proiecte: <strong>{projects.length}</strong></p>
+            <p style={{ margin: '5px 0', color: '#198754' }}>Proiecte finalizate: <strong>{projects.filter(p => p.done).length}</strong></p>
+            <p style={{ margin: '5px 0', color: '#fd7e14' }}>Proiecte în lucru: <strong>{projects.filter(p => !p.done).length}</strong></p>
         </div>
      </div>
     );
